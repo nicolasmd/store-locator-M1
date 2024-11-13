@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+	<default>
+		<reference name="root">
+			<action method="setTemplate"><template>page/1column.phtml</template></action>
+		</reference>
+	</default>
+	<storelocator_index_index>
+		<reference name="before_body_end">
+			<block type="core/text" name="gmaps">
+				<action method="setText">
+					<text><![CDATA[<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=xxxxxx&sensor=false"></script>]]></text>
+				</action>
+			</block>
+		</reference>
+		<reference name="head">
+			<action method="addItem"><type>skin_js</type><script>sinabs/storelocator/js/storelocator.js</script></action>
+			<action method="addItem"><type>skin_js</type><script>sinabs/storelocator/js/markerclusterer.js</script></action>
+			<action method="addItem"><type>skin_css</type><stylesheet>sinabs/storelocator/css/styles.css</stylesheet></action>
+		</reference>
+		<reference name="content">
+			<block type="storelocator/view" template="sinabs/storelocator/view.phtml" name="storelocator" />
+		</reference>
+	</storelocator_index_index>
+	<checkout_onepage_index>
+		<reference name="head">
+			<action method="addItem"><type>skin_js</type><script>sinabs/storelocator/js/storelocator.js</script></action>
+			<action method="addItem"><type>skin_js</type><name>sinabs/storelocator/js/shipping.js</name></action>
+			<action method="addItem"><type>skin_css</type><stylesheet>sinabs/storelocator/css/shipping.css</stylesheet></action>
+		</reference>
+		<!--reference name='checkout.onepage.shipping_method.available'>
+            <action method="setTemplate" ifconfig="storelocator/shipping/active_map">
+            	<template>sinabs/storelocator/checkout/onepage/shipping_method/available/map.phtml</template>
+            </action>
+            <action method="setTemplate" ifconfig="storelocator/shipping/active_stores">
+            	<template>sinabs/storelocator/checkout/onepage/shipping_method/available.phtml</template>
+            </action>
+        </reference-->
+        <reference name="before_body_end">
+        	<block type="core/text" name="gmaps">
+				<action method="setText" ifconfig="storelocator/shipping/active_map">
+					<text><![CDATA[<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>]]></text>
+				</action>
+			</block>
+        	<block type="storelocator/view" name="storelocator.map" template="sinabs/storelocator/checkout/onepage/map.phtml" />
+        </reference>
+	</checkout_onepage_index>
+	<checkout_onepage_shippingmethod>
+		<reference name="root">
+			<block type="core/template" output="toHtml" template="sinabs/storelocator/checkout/onepage/shipping.phtml" name="storelocator.shipping" />
+		</reference>
+	</checkout_onepage_shippingmethod>
+</layout>
